@@ -22,6 +22,9 @@ class Tokenizer:
                 t = Tokenizer(group_str)
 
                 tokens.append(MToken(TokenType.GROUPING, t.tokenize()))
+            elif c.isalpha() and c != " ":
+                tokens.append(MToken(TokenType.VARIABLE, c))
+                self.current_index += 1
             elif c == "+":
                 tokens.append(MToken(TokenType.PLUS))
                 self.current_index += 1

@@ -24,6 +24,10 @@ def express(tokens: [MToken]) -> Expr:
             left_expr = express_token(tok)
 
             current_index += 1
+        elif tok.token_type == TokenType.VARIABLE:
+            left_expr = express_token(tok)
+
+            current_index += 1
         elif tok.token_type == TokenType.PLUS:
             right_expr = express_token(tokens[current_index + 1])
             left_expr = Plus(left_expr, right_expr)
@@ -53,11 +57,15 @@ def express_token(token: MToken) -> Expr:
         return Constant(token.value)
     elif token.token_type == TokenType.GROUPING:
         return express(token.value)
+    elif token.token_type == TokenType.VARIABLE:
+        return Variable(token.value)
     else:
         raise Exception("Can't express an individual token of type" + str(token.token_type))
 
 
 def group_priority(tokens: [MToken]) -> [MToken]:
+    """Adds grouping around multiplication and division from left to right to prioritize them for GEMA"""
+
     current_index = 0
 
     result_tokens = []

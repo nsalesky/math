@@ -10,6 +10,7 @@ class TokenType(Enum):
     DIVIDE = 5
     NEG = 6
     GROUPING = 7
+    VARIABLE = 8
 
 @total_ordering
 class MToken:
