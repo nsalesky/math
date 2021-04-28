@@ -43,7 +43,7 @@ class Tokenizer:
 
         return tokens
 
-    def consume_number(self) -> int:
+    def consume_number(self) -> float:
         """
         Consumes characters until a non-numeric character is reached
         :return:
@@ -51,6 +51,7 @@ class Tokenizer:
         """
 
         result_string = ""
+        num_periods = 0
 
         while self.current_index < len(self.text):
             c = self.text[self.current_index]
@@ -58,11 +59,17 @@ class Tokenizer:
             if c.isnumeric():
                 result_string += c
                 self.current_index += 1
+            elif c == ".":
+                if num_periods == 0:
+                    result_string += c
+                    self.current_index += 1
+                    num_periods += 1
+                else:
+                    raise Exception("A number can only have one decimal point")
             else:
                 break
 
-        return int(result_string)
-
+        return float(result_string)
 
     def consume_grouping(self) -> str:
         num_unclosed_parens = 1

@@ -14,6 +14,6 @@ def evaluate_str(expression: str) -> float:
 
 
 if __name__ == "__main__":
-    test_str = "(9+ 5)* 7"
+    test_str = "5 + 1.1"
 
     print(evaluate_str(test_str))
